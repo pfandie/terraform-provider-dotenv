@@ -49,6 +49,31 @@ resource "aws_lambda_function" "this" {
 }
 ```
 
+### Environment variables
+
+Read specific keys from the process environment (e.g. set by a CI pipeline) and merge with `.env` file values:
+
+```hcl
+data "dotenv_env" "pipeline" {
+  keys           = ["DATABASE_URL", "NODE_ENV", "API_KEY"]
+  sensitive_envs = ["API_KEY"]
+}
+
+data "dotenv_file" "app" {
+  env_file = ".env.${var.environment}"
+}
+
+resource "aws_lambda_function" "this" {
+  # ...
+  environment {
+    variables = merge(
+      data.dotenv_env.pipeline.values,
+      data.dotenv_file.app.values,
+    )
+  }
+}
+```
+
 ### Ephemeral resource
 
 Values opened ephemerally are not persisted in the plan or state file —
@@ -68,7 +93,8 @@ resource "aws_secretsmanager_secret_version" "app" {
 
 ## Examples
 
-- [Data source](./examples/data-sources/dotenv_file)
+- [Data source (file)](./examples/data-sources/dotenv_file)
+- [Data source (env)](./examples/data-sources/dotenv_env)
 - [Ephemeral resource](./examples/ephemeral-resources/dotenv_file)
 
 ## Requirements
@@ -83,9 +109,12 @@ resource "aws_secretsmanager_secret_version" "app" {
 | Name                                              | Type               |
 |---------------------------------------------------|--------------------|
 | [dotenv_file](./docs/data-sources/file.md)        | data source        |
+| [dotenv_env](./docs/data-sources/env.md)          | data source        |
 | [dotenv_file](./docs/ephemeral-resources/file.md) | ephemeral resource |
 
 ## Inputs
+
+### `dotenv_file`
 
 | Name           | Description                                                       | Type           | Default  | Required |
 |----------------|-------------------------------------------------------------------|----------------|----------|:--------:|
@@ -95,6 +124,13 @@ resource "aws_secretsmanager_secret_version" "app" {
 | exclude_envs   | These keys won't be included. Exclusive to `include_envs`         | `list(string)` | `null`   |    no    |
 | sensitive_envs | These keys are returned in `sensitive_values` instead of `values` | `list(string)` | `null`   |    no    |
 | include_empty  | Also load empty keys (e.g. `FOO=`)                                | `bool`         | `false`  |    no    |
+
+### `dotenv_env`
+
+| Name           | Description                                                       | Type           | Default | Required |
+|----------------|-------------------------------------------------------------------|----------------|---------|:--------:|
+| keys           | Environment variable names to read from the process environment   | `list(string)` | —       |   yes    |
+| sensitive_envs | These keys are returned in `sensitive_values` instead of `values` | `list(string)` | `null`  |    no    |
 
 ## Outputs
 
