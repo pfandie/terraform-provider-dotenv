@@ -19,6 +19,7 @@ import (
 func TestAccFileEphemeralResource_basic(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
+			// Ephemeral resources: Terraform >= 1.10, OpenTofu >= 1.11
 			tfversion.SkipBelow(tfversion.Version1_10_0),
 		},
 		Steps: []resource.TestStep{

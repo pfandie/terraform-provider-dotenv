@@ -17,3 +17,5 @@ terraform.tfstate.backup
 # Local env files (test fixtures in internal/provider/testdata are tracked)
 .env
 .env.*
+
+todo.md
