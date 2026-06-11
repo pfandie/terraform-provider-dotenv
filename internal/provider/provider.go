@@ -47,7 +47,10 @@ func (p *DotEnvProvider) Resources(_ context.Context) []func() resource.Resource
 }
 
 func (p *DotEnvProvider) DataSources(_ context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{NewFileDataSource}
+	return []func() datasource.DataSource{
+		NewFileDataSource,
+		NewEnvDataSource,
+	}
 }
 
 func (p *DotEnvProvider) EphemeralResources(_ context.Context) []func() ephemeral.EphemeralResource {
