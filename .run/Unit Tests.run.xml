@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Unit Tests" type="GoTestRunConfiguration" factoryName="Go Test">
+    <module name="terraform-provider-dotenv" />
+    <working_directory value="$PROJECT_DIR$" />
+    <kind value="PACKAGE" />
+    <package value="github.com/pfandie/terraform-provider-dotenv/internal/provider" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$" />
+    <framework value="gotest" />
+    <pattern value="^TestParse" />
+    <method v="2" />
+  </configuration>
+</component>

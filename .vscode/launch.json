@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Tests (Terraform)",
+      "type": "go",
+      "request": "launch",
+      "mode": "test",
+      "program": "${workspaceFolder}/internal/provider",
+      "env": {
+        "TF_ACC": "1"
+      }
+    },
+    {
+      "name": "Debug Tests (OpenTofu)",
+      "type": "go",
+      "request": "launch",
+      "mode": "test",
+      "program": "${workspaceFolder}/internal/provider",
+      "env": {
+        "TF_ACC": "1",
+        "TF_ACC_TERRAFORM_PATH": "/opt/homebrew/bin/tofu",
+        "TF_ACC_PROVIDER_HOST": "registry.opentofu.org"
+      }
+    }
+  ]
+}

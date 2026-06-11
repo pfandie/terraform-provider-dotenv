@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Acceptance Tests (OpenTofu)" type="GoTestRunConfiguration" factoryName="Go Test">
+    <module name="terraform-provider-dotenv" />
+    <working_directory value="$PROJECT_DIR$" />
+    <envs>
+      <env name="TF_ACC" value="1" />
+      <env name="TF_ACC_TERRAFORM_PATH" value="/opt/homebrew/bin/tofu" />
+      <env name="TF_ACC_PROVIDER_HOST" value="registry.opentofu.org" />
+    </envs>
+    <kind value="PACKAGE" />
+    <package value="github.com/pfandie/terraform-provider-dotenv/internal/provider" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$" />
+    <framework value="gotest" />
+    <method v="2" />
+  </configuration>
+</component>

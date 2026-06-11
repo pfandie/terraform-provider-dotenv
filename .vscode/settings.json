@@ -1,0 +1,7 @@
+{
+  // makes the test code lenses ("run test" above each function) run
+  // acceptance tests too instead of silently skipping them
+  "go.testEnvVars": {
+    "TF_ACC": "1"
+  }
+}
