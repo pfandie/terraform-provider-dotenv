@@ -1,0 +1,19 @@
+# IDE (shared run configs in .run/ and .vscode/ are tracked)
+.idea/
+*.iml
+
+# Go
+dist/
+*.test
+*.out
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+
+# Local env files (test fixtures in internal/provider/testdata are tracked)
+.env
+.env.*
