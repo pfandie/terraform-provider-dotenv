@@ -30,9 +30,7 @@ func TestAccFileEphemeralResource_basic(t *testing.T) {
 					"dotenv": testAccProtoV6ProviderFactories["dotenv"],
 					"echo":   echoprovider.NewProviderServer(),
 				},
-				// Ephemeral resources are re-read on every plan; a non-empty plan after apply is expected.
-				ExpectNonEmptyPlan: true,
-				ConfigFile:         config.StaticFile("testdata/ephemeral_basic.tf"),
+				ConfigFile: config.StaticFile("testdata/ephemeral_basic.tf"),
 				ConfigStateChecks: []statecheck.StateCheck{
 					statecheck.ExpectKnownValue(
 						"echo.test",

@@ -1,7 +1,7 @@
 # Terraform Provider: dotenv
 
 ![Terraform](https://img.shields.io/badge/Terraform-%3E%3D1.10-7B42BC?logo=terraform&logoColor=white)
-![OpenTofu](https://img.shields.io/badge/OpenTofu-%3E%3D1.11-FFDA18?logo=opentofu&logoColor=black)
+![OpenTofu](https://img.shields.io/badge/OpenTofu-%3E%3D1.12-FFDA18?logo=opentofu&logoColor=black)
 ![Go](https://img.shields.io/badge/Go-%3E%3D1.26-00ADD8?logo=go&logoColor=white)
 [![GitHub Release](https://img.shields.io/github/v/release/pfandie/terraform-provider-dotenv?logo=github&label=Release)](https://github.com/pfandie/terraform-provider-dotenv/releases/latest)
 [![Tests](https://img.shields.io/github/actions/workflow/status/pfandie/terraform-provider-dotenv/test.yml?branch=main&logo=github&label=Tests)](https://github.com/pfandie/terraform-provider-dotenv/actions/workflows/test.yml)
@@ -76,7 +76,7 @@ resource "aws_secretsmanager_secret_version" "app" {
 | Name                                                             | Version |
 |------------------------------------------------------------------|---------|
 | [Terraform](https://developer.hashicorp.com/terraform/downloads) | >= 1.10 |
-| [OpenTofu](https://opentofu.org/docs/intro/install/)             | >= 1.11 |
+| [OpenTofu](https://opentofu.org/docs/intro/install/)             | >= 1.12 |
 
 ## Resources
 
