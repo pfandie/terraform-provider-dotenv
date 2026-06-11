@@ -1,0 +1,139 @@
+name: Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'README.md'
+      - 'CHANGELOG.md'
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - 'CHANGELOG.md'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build, Lint & Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+
+      - run: go mod download
+
+      - run: go build -v .
+
+      - run: go test -v ./...
+
+      - name: Run linters
+        uses: golangci/golangci-lint-action@82606bf257cbaff209d206a39f5134f0cfbfd2ee # v9.2.1
+        with:
+          version: latest
+
+      - name: Run terraform provider linters
+        run: go run github.com/bflad/tfproviderlint/cmd/tfproviderlintx@latest ./...
+
+  generate:
+    name: Docs & go.mod up to date
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+
+      - uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+        with:
+          terraform_wrapper: false
+      - run: go mod tidy
+
+      - name: Check go.mod is tidy
+        run: |
+          git diff --compact-summary --exit-code -- go.mod go.sum || \
+            (echo; echo "go.mod/go.sum are not tidy. Run 'go mod tidy' and commit."; exit 1)
+
+      - run: make generate
+
+      - name: Check docs are up to date
+        run: |
+          git diff --compact-summary --exit-code || \
+            (echo; echo "Generated docs are stale. Run 'make generate' and commit."; exit 1)
+
+  test-terraform:
+    name: 'Acceptance Tests (Terraform ${{ matrix.terraform }})'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        terraform:
+          - '1.10.*'  # minimum supported version (ephemeral resources)
+          - '1.13.*'
+          - '1.15.*'
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+
+      - uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
+
+      - run: go mod download
+
+      - run: go test -v -cover ./internal/provider/
+        timeout-minutes: 10
+        env:
+          TF_ACC: "1"
+
+  test-opentofu:
+    name: 'Acceptance Tests (OpenTofu ${{ matrix.opentofu }})'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        opentofu:
+          - '1.10.*'
+          - '1.12.*'
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+
+      - uses: opentofu/setup-opentofu@847eaa4afeb791b06daa46e8eafa8b1b68d7cfb4 # v2.0.1
+        with:
+          tofu_version: ${{ matrix.opentofu }}
+          tofu_wrapper: false
+
+      - run: go mod download
+
+      - name: Point acceptance tests at the tofu binary
+        run: echo "TF_ACC_TERRAFORM_PATH=$(which tofu)" >> "$GITHUB_ENV"
+
+      - run: go test -v -cover ./internal/provider/
+        timeout-minutes: 10
+        env:
+          TF_ACC: "1"
+          TF_ACC_PROVIDER_HOST: 'registry.opentofu.org'

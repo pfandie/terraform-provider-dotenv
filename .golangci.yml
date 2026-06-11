@@ -1,0 +1,54 @@
+version: "2"
+linters:
+  default: none
+  enable:
+    - copyloopvar
+    - depguard
+    - durationcheck
+    - errcheck
+    - forcetypeassert
+    - gosec
+    - godot
+    - govet
+    - ineffassign
+    - makezero
+    - misspell
+    - nilerr
+    - predeclared
+    - staticcheck
+    - unconvert
+    - unparam
+    - unused
+    - usetesting
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+  settings:
+    depguard:
+      rules:
+        main:
+          list-mode: lax
+          deny:
+            # this provider is built on the plugin framework, the legacy SDK must not sneak in
+            - pkg: "github.com/hashicorp/terraform-plugin-sdk/v2"
+              desc: "Use the Terraform Plugin Framework (terraform-plugin-framework)"
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+formatters:
+  enable:
+    - gofmt
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
