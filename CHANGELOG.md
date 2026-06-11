@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.0](https://github.com/pfandie/terraform-provider-dotenv/compare/v1.0.0...v1.1.0) (2026-06-11)
+
+
+### Features
+
+* enable possibility to read native env-vars and env-vars from ci ([fcb10d6](https://github.com/pfandie/terraform-provider-dotenv/commit/fcb10d68497ec4aec7a74b2034b7959f9f2e0c14))
+* enable possibility to read native env-vars and env-vars from ci ([a503974](https://github.com/pfandie/terraform-provider-dotenv/commit/a503974dfb8344efed59b41eb9d422580502dcbc))
+
+
+### Bug Fixes
+
+* make use of github token to let release-please act as user and s… ([75c3e67](https://github.com/pfandie/terraform-provider-dotenv/commit/75c3e6733b3c3570187061b7c4557b914eb6e860))
+* make use of github token to let release-please act as user and start workflows ([2fd1697](https://github.com/pfandie/terraform-provider-dotenv/commit/2fd1697e288025e14a53f4e0def19f879450253c))
+
 ## 1.0.0 (2026-06-11)
 
 
