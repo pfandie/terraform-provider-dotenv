@@ -35,7 +35,7 @@ func (p *DotEnvProvider) Metadata(_ context.Context, _ provider.MetadataRequest,
 
 func (p *DotEnvProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "Loads key/value pairs from .env files into Terraform.",
+		Description: "Loads key/value pairs into Terraform — from .env files (dotenv_file) or directly from environment.",
 	}
 }
 

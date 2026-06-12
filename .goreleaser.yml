@@ -39,6 +39,7 @@ release:
   # the GitHub release (incl. changelog) is created by release-please,
   # goreleaser only attaches the provider artifacts to it
   mode: keep-existing
+  make_latest: true
   extra_files:
     - glob: 'terraform-registry-manifest.json'
       name_template: '{{ .ProjectName }}_{{ .Version }}_manifest.json'
