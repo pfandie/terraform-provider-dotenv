@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/pfandie/terraform-provider-dotenv/compare/v1.1.0...v1.1.1) (2026-06-12)
+
+
+### Bug Fixes
+
+* **docs:** adds process env to description/docs, adds 'make latest: true' to goreleaser ([bcb0712](https://github.com/pfandie/terraform-provider-dotenv/commit/bcb0712e43cc8d079364946f9f4c0b2b5569cd54))
+
 ## [1.1.0](https://github.com/pfandie/terraform-provider-dotenv/compare/v1.0.0...v1.1.0) (2026-06-11)
 
 
