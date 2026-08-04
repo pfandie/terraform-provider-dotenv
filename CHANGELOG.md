@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/pfandie/terraform-provider-dotenv/compare/v1.1.1...v1.1.2) (2026-08-04)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/hashicorp/terraform-plugin-log to v0.11.0 ([edc59f0](https://github.com/pfandie/terraform-provider-dotenv/commit/edc59f016e1f8b48feddb5f47d96e8892fd05329))
+
 ## [1.1.1](https://github.com/pfandie/terraform-provider-dotenv/compare/v1.1.0...v1.1.1) (2026-06-12)
 
 
